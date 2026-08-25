@@ -53,7 +53,7 @@ export class OrbitClient {
   constructor(options: OrbitClientOptions) {
     const configuration = new Configuration({
       apiKey: options.apiKey,
-      basePath: options.basePath ?? "https://api.orbit.kuzium.com",
+      basePath: options.basePath ?? "https://orbit.kuzium.com",
     });
 
     this.meApi = new MeApi(configuration);

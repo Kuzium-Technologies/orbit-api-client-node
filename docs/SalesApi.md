@@ -1,6 +1,6 @@
 # SalesApi
 
-All URIs are relative to *http://localhost:5221*
+All URIs are relative to *https://orbit.kuzium.com*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
