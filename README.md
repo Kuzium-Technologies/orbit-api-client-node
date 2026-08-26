@@ -1,4 +1,4 @@
-## @kuzium/orbit-api-client@0.2.0
+## @kuzium/orbit-api-client@0.3.0
 
 This generator creates TypeScript/JavaScript client that utilizes [axios](https://github.com/axios/axios). The generated Node module can be used in the following environments:
 
@@ -36,7 +36,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @kuzium/orbit-api-client@0.2.0 --save
+npm install @kuzium/orbit-api-client@0.3.0 --save
 ```
 
 _unPublished (not recommended):_
@@ -60,6 +60,11 @@ Class | Method | HTTP request | Description
 *InventoryApi* | [**getInventoryItem**](docs/InventoryApi.md#getinventoryitem) | **GET** /api/v1/accounts/{accountId}/inventory/items/{id} | 
 *InventoryApi* | [**listInventoryItems**](docs/InventoryApi.md#listinventoryitems) | **GET** /api/v1/accounts/{accountId}/inventory/items | 
 *MeApi* | [**getCurrentContext**](docs/MeApi.md#getcurrentcontext) | **GET** /api/v1/me | 
+*PaymentReceiptApi* | [**createPaymentReceipt**](docs/PaymentReceiptApi.md#createpaymentreceipt) | **POST** /api/v1/accounts/{accountId}/payment-receipts | 
+*PaymentReceiptApi* | [**getPaymentReceipt**](docs/PaymentReceiptApi.md#getpaymentreceipt) | **GET** /api/v1/accounts/{accountId}/payment-receipts/{id} | 
+*PaymentReceiptApi* | [**getPaymentReceiptsSummary**](docs/PaymentReceiptApi.md#getpaymentreceiptssummary) | **GET** /api/v1/accounts/{accountId}/payment-receipts/summary | 
+*PaymentReceiptApi* | [**listPaymentReceipts**](docs/PaymentReceiptApi.md#listpaymentreceipts) | **GET** /api/v1/accounts/{accountId}/payment-receipts | 
+*PaymentReceiptApi* | [**voidPaymentReceipt**](docs/PaymentReceiptApi.md#voidpaymentreceipt) | **POST** /api/v1/accounts/{accountId}/payment-receipts/{id}/void | 
 *ProductsApi* | [**createProduct**](docs/ProductsApi.md#createproduct) | **POST** /api/v1/accounts/{accountId}/products | 
 *ProductsApi* | [**deleteProduct**](docs/ProductsApi.md#deleteproduct) | **DELETE** /api/v1/accounts/{accountId}/products/{id} | 
 *ProductsApi* | [**getProduct**](docs/ProductsApi.md#getproduct) | **GET** /api/v1/accounts/{accountId}/products/{id} | 
@@ -90,6 +95,7 @@ Class | Method | HTTP request | Description
 ### Documentation For Models
 
  - [CreateCustomerRequest](docs/CreateCustomerRequest.md)
+ - [CreatePaymentReceiptRequest](docs/CreatePaymentReceiptRequest.md)
  - [CreateProductRequest](docs/CreateProductRequest.md)
  - [CreatePurchaseOrderLineRequest](docs/CreatePurchaseOrderLineRequest.md)
  - [CreatePurchaseOrderRequest](docs/CreatePurchaseOrderRequest.md)
@@ -100,11 +106,16 @@ Class | Method | HTTP request | Description
  - [InventoryItemResponse](docs/InventoryItemResponse.md)
  - [MeResponse](docs/MeResponse.md)
  - [PagedResultOfCustomerResponse](docs/PagedResultOfCustomerResponse.md)
+ - [PagedResultOfPaymentReceiptResponse](docs/PagedResultOfPaymentReceiptResponse.md)
  - [PagedResultOfProductResponse](docs/PagedResultOfProductResponse.md)
  - [PagedResultOfPurchaseInvoiceDto](docs/PagedResultOfPurchaseInvoiceDto.md)
  - [PagedResultOfPurchaseOrderResponse](docs/PagedResultOfPurchaseOrderResponse.md)
  - [PagedResultOfSalesInvoiceDto](docs/PagedResultOfSalesInvoiceDto.md)
  - [PagedResultOfSalesOrderDto](docs/PagedResultOfSalesOrderDto.md)
+ - [PaymentReceiptDetailResponse](docs/PaymentReceiptDetailResponse.md)
+ - [PaymentReceiptLedgerLineResponse](docs/PaymentReceiptLedgerLineResponse.md)
+ - [PaymentReceiptResponse](docs/PaymentReceiptResponse.md)
+ - [PaymentReceiptSummaryResponse](docs/PaymentReceiptSummaryResponse.md)
  - [ProductResponse](docs/ProductResponse.md)
  - [PurchaseInvoiceDetailDto](docs/PurchaseInvoiceDetailDto.md)
  - [PurchaseInvoiceDto](docs/PurchaseInvoiceDto.md)
@@ -127,6 +138,7 @@ Class | Method | HTTP request | Description
  - [UpdatePurchaseOrderRequest](docs/UpdatePurchaseOrderRequest.md)
  - [UpdatePurchaseOrderStatusRequest](docs/UpdatePurchaseOrderStatusRequest.md)
  - [UpdateSalesOrderRequest](docs/UpdateSalesOrderRequest.md)
+ - [VoidPaymentReceiptRequest](docs/VoidPaymentReceiptRequest.md)
 
 
 <a id="documentation-for-authorization"></a>

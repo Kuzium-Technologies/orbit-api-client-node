@@ -1,5 +1,5 @@
 import { Configuration } from "../configuration";
-import { CrmApi, InventoryApi, MeApi, ProductsApi, PurchaseApi, PurchaseInvoiceApi, SalesApi, SalesInvoiceApi } from "../api";
+import { CrmApi, InventoryApi, MeApi, PaymentReceiptApi, ProductsApi, PurchaseApi, PurchaseInvoiceApi, SalesApi, SalesInvoiceApi } from "../api";
 
 export interface OrbitClientOptions {
   /** Create one under Settings > API Keys in your Orbit account. */
@@ -50,6 +50,7 @@ export class OrbitClient {
   readonly products: AccountScoped<ProductsApi>;
   readonly purchase: AccountScoped<PurchaseApi>;
   readonly purchaseInvoices: AccountScoped<PurchaseInvoiceApi>;
+  readonly paymentReceipts: AccountScoped<PaymentReceiptApi>;
 
   private readonly meApi: MeApi;
   private accountIdPromise?: Promise<string>;
@@ -70,6 +71,7 @@ export class OrbitClient {
     this.products = accountScoped(new ProductsApi(configuration), resolveAccountId);
     this.purchase = accountScoped(new PurchaseApi(configuration), resolveAccountId);
     this.purchaseInvoices = accountScoped(new PurchaseInvoiceApi(configuration), resolveAccountId);
+    this.paymentReceipts = accountScoped(new PaymentReceiptApi(configuration), resolveAccountId);
   }
 
   /** Resolved once per client instance (not once per call) and cached for the client's lifetime - an API key's account never changes. */

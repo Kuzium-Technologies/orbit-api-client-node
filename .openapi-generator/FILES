@@ -6,6 +6,7 @@ base.ts
 common.ts
 configuration.ts
 docs/CreateCustomerRequest.md
+docs/CreatePaymentReceiptRequest.md
 docs/CreateProductRequest.md
 docs/CreatePurchaseOrderLineRequest.md
 docs/CreatePurchaseOrderRequest.md
@@ -19,11 +20,17 @@ docs/InventoryItemResponse.md
 docs/MeApi.md
 docs/MeResponse.md
 docs/PagedResultOfCustomerResponse.md
+docs/PagedResultOfPaymentReceiptResponse.md
 docs/PagedResultOfProductResponse.md
 docs/PagedResultOfPurchaseInvoiceDto.md
 docs/PagedResultOfPurchaseOrderResponse.md
 docs/PagedResultOfSalesInvoiceDto.md
 docs/PagedResultOfSalesOrderDto.md
+docs/PaymentReceiptApi.md
+docs/PaymentReceiptDetailResponse.md
+docs/PaymentReceiptLedgerLineResponse.md
+docs/PaymentReceiptResponse.md
+docs/PaymentReceiptSummaryResponse.md
 docs/ProductResponse.md
 docs/ProductsApi.md
 docs/PurchaseApi.md
@@ -51,6 +58,7 @@ docs/UpdateProductRequest.md
 docs/UpdatePurchaseOrderRequest.md
 docs/UpdatePurchaseOrderStatusRequest.md
 docs/UpdateSalesOrderRequest.md
+docs/VoidPaymentReceiptRequest.md
 git_push.sh
 index.ts
 package.json

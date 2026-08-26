@@ -35,6 +35,21 @@ export interface CreateCustomerRequest {
     'notes': string | null;
     'priceListId'?: string | null;
 }
+export interface CreatePaymentReceiptRequest {
+    'voucherType': string;
+    'postingDate': string | null;
+    'externalReferenceNo': string | null;
+    'debitAccountId': string;
+    'creditAccountId': string;
+    'amount': number;
+    'isTaxInclusive': boolean;
+    'taxRateId': string | null;
+    'taxAccountId': string | null;
+    'currencyCode': string | null;
+    'foreignAmount': number;
+    'exchangeRate': number;
+    'description': string;
+}
 export interface CreateProductRequest {
     'sku': string;
     'name': string;
@@ -142,6 +157,13 @@ export interface PagedResultOfCustomerResponse {
     'pageSize': number;
     'totalPages': number;
 }
+export interface PagedResultOfPaymentReceiptResponse {
+    'items': Array<PaymentReceiptResponse>;
+    'totalCount': number;
+    'currentPage': number;
+    'pageSize': number;
+    'totalPages': number;
+}
 export interface PagedResultOfProductResponse {
     'items': Array<ProductResponse>;
     'totalCount': number;
@@ -176,6 +198,57 @@ export interface PagedResultOfSalesOrderDto {
     'currentPage': number;
     'pageSize': number;
     'totalPages': number;
+}
+export interface PaymentReceiptDetailResponse {
+    'voucher': PaymentReceiptResponse;
+    'ledgerLines': Array<PaymentReceiptLedgerLineResponse>;
+}
+export interface PaymentReceiptLedgerLineResponse {
+    'chartOfAccountId': string;
+    'accountCode': string;
+    'accountName': string;
+    'debit': number;
+    'credit': number;
+    'foreignAmount': number;
+    'exchangeRate': number;
+}
+export interface PaymentReceiptResponse {
+    'id': string;
+    'voucherNo': string;
+    'voucherType': string;
+    'externalReferenceNo': string | null;
+    'postingDate': string;
+    'debitAccountId': string;
+    'debitAccountCode': string;
+    'debitAccountName': string;
+    'creditAccountId': string;
+    'creditAccountCode': string;
+    'creditAccountName': string;
+    'amount': number;
+    'isTaxInclusive': boolean;
+    'taxRateId': string | null;
+    'taxRateName': string | null;
+    'taxRatePercent': number;
+    'taxAccountId': string | null;
+    'taxAccountCode': string | null;
+    'taxAccountName': string | null;
+    'netAmount': number;
+    'taxAmount': number;
+    'grossAmount': number;
+    'currencyCode': string | null;
+    'foreignAmount': number;
+    'exchangeRate': number;
+    'description': string;
+    'status': string;
+    'voidedAt': string | null;
+    'voidReason': string | null;
+    'createdAt': string;
+    'updatedAt': string;
+}
+export interface PaymentReceiptSummaryResponse {
+    'totalPayments': number;
+    'totalReceipts': number;
+    'net': number;
 }
 export interface ProductResponse {
     'id': string;
@@ -461,6 +534,9 @@ export interface UpdateSalesOrderRequest {
     'customerId': string;
     'discountPercent': number;
     'lines': Array<CreateSalesOrderLineRequest>;
+}
+export interface VoidPaymentReceiptRequest {
+    'reason': string;
 }
 
 /**
@@ -1354,6 +1430,535 @@ export class MeApi extends BaseAPI implements MeApiInterface {
      */
     public getCurrentContext(options?: RawAxiosRequestConfig) {
         return MeApiFp(this.configuration).getCurrentContext(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PaymentReceiptApi - axios parameter creator
+ */
+export const PaymentReceiptApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreatePaymentReceiptRequest} createPaymentReceiptRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPaymentReceipt: async (accountId: string, createPaymentReceiptRequest: CreatePaymentReceiptRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('createPaymentReceipt', 'accountId', accountId)
+            // verify required parameter 'createPaymentReceiptRequest' is not null or undefined
+            assertParamExists('createPaymentReceipt', 'createPaymentReceiptRequest', createPaymentReceiptRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/payment-receipts`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createPaymentReceiptRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPaymentReceipt: async (accountId: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('getPaymentReceipt', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getPaymentReceipt', 'id', id)
+            const localVarPath = `/api/v1/accounts/{accountId}/payment-receipts/{id}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPaymentReceiptsSummary: async (accountId: string, search?: string, filter?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('getPaymentReceiptsSummary', 'accountId', accountId)
+            const localVarPath = `/api/v1/accounts/{accountId}/payment-receipts/summary`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter['filter'] = filter;
+            }
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [type] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPaymentReceipts: async (accountId: string, search?: string, type?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('listPaymentReceipts', 'accountId', accountId)
+            const localVarPath = `/api/v1/accounts/{accountId}/payment-receipts`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter['filter'] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (sortBy !== undefined) {
+                localVarQueryParameter['sortBy'] = sortBy;
+            }
+
+            if (sortOrder !== undefined) {
+                localVarQueryParameter['sortOrder'] = sortOrder;
+            }
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {VoidPaymentReceiptRequest} voidPaymentReceiptRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voidPaymentReceipt: async (accountId: string, id: string, voidPaymentReceiptRequest: VoidPaymentReceiptRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('voidPaymentReceipt', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('voidPaymentReceipt', 'id', id)
+            // verify required parameter 'voidPaymentReceiptRequest' is not null or undefined
+            assertParamExists('voidPaymentReceipt', 'voidPaymentReceiptRequest', voidPaymentReceiptRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/payment-receipts/{id}/void`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(voidPaymentReceiptRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PaymentReceiptApi - functional programming interface
+ */
+export const PaymentReceiptApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PaymentReceiptApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreatePaymentReceiptRequest} createPaymentReceiptRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createPaymentReceipt(accountId: string, createPaymentReceiptRequest: CreatePaymentReceiptRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentReceiptResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPaymentReceipt(accountId, createPaymentReceiptRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentReceiptApi.createPaymentReceipt']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPaymentReceipt(accountId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentReceiptDetailResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPaymentReceipt(accountId, id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentReceiptApi.getPaymentReceipt']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPaymentReceiptsSummary(accountId: string, search?: string, filter?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentReceiptSummaryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPaymentReceiptsSummary(accountId, search, filter, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentReceiptApi.getPaymentReceiptsSummary']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [type] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listPaymentReceipts(accountId: string, search?: string, type?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PagedResultOfPaymentReceiptResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPaymentReceipts(accountId, search, type, filter, page, pageSize, sortBy, sortOrder, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentReceiptApi.listPaymentReceipts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {VoidPaymentReceiptRequest} voidPaymentReceiptRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voidPaymentReceipt(accountId: string, id: string, voidPaymentReceiptRequest: VoidPaymentReceiptRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentReceiptResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voidPaymentReceipt(accountId, id, voidPaymentReceiptRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentReceiptApi.voidPaymentReceipt']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PaymentReceiptApi - factory interface
+ */
+export const PaymentReceiptApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PaymentReceiptApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreatePaymentReceiptRequest} createPaymentReceiptRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPaymentReceipt(accountId: string, createPaymentReceiptRequest: CreatePaymentReceiptRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentReceiptResponse> {
+            return localVarFp.createPaymentReceipt(accountId, createPaymentReceiptRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPaymentReceipt(accountId: string, id: string, options?: RawAxiosRequestConfig): AxiosPromise<PaymentReceiptDetailResponse> {
+            return localVarFp.getPaymentReceipt(accountId, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [filter] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPaymentReceiptsSummary(accountId: string, search?: string, filter?: string, options?: RawAxiosRequestConfig): AxiosPromise<PaymentReceiptSummaryResponse> {
+            return localVarFp.getPaymentReceiptsSummary(accountId, search, filter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [type] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPaymentReceipts(accountId: string, search?: string, type?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfPaymentReceiptResponse> {
+            return localVarFp.listPaymentReceipts(accountId, search, type, filter, page, pageSize, sortBy, sortOrder, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {VoidPaymentReceiptRequest} voidPaymentReceiptRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voidPaymentReceipt(accountId: string, id: string, voidPaymentReceiptRequest: VoidPaymentReceiptRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentReceiptResponse> {
+            return localVarFp.voidPaymentReceipt(accountId, id, voidPaymentReceiptRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PaymentReceiptApi - interface
+ */
+export interface PaymentReceiptApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {CreatePaymentReceiptRequest} createPaymentReceiptRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createPaymentReceipt(accountId: string, createPaymentReceiptRequest: CreatePaymentReceiptRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentReceiptResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPaymentReceipt(accountId: string, id: string, options?: RawAxiosRequestConfig): AxiosPromise<PaymentReceiptDetailResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {string} [filter] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPaymentReceiptsSummary(accountId: string, search?: string, filter?: string, options?: RawAxiosRequestConfig): AxiosPromise<PaymentReceiptSummaryResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {string} [type] 
+     * @param {string} [filter] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [sortBy] 
+     * @param {string} [sortOrder] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listPaymentReceipts(accountId: string, search?: string, type?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfPaymentReceiptResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {VoidPaymentReceiptRequest} voidPaymentReceiptRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    voidPaymentReceipt(accountId: string, id: string, voidPaymentReceiptRequest: VoidPaymentReceiptRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentReceiptResponse>;
+
+}
+
+/**
+ * PaymentReceiptApi - object-oriented interface
+ */
+export class PaymentReceiptApi extends BaseAPI implements PaymentReceiptApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {CreatePaymentReceiptRequest} createPaymentReceiptRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public createPaymentReceipt(accountId: string, createPaymentReceiptRequest: CreatePaymentReceiptRequest, options?: RawAxiosRequestConfig) {
+        return PaymentReceiptApiFp(this.configuration).createPaymentReceipt(accountId, createPaymentReceiptRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getPaymentReceipt(accountId: string, id: string, options?: RawAxiosRequestConfig) {
+        return PaymentReceiptApiFp(this.configuration).getPaymentReceipt(accountId, id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {string} [filter] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getPaymentReceiptsSummary(accountId: string, search?: string, filter?: string, options?: RawAxiosRequestConfig) {
+        return PaymentReceiptApiFp(this.configuration).getPaymentReceiptsSummary(accountId, search, filter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {string} [type] 
+     * @param {string} [filter] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [sortBy] 
+     * @param {string} [sortOrder] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public listPaymentReceipts(accountId: string, search?: string, type?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig) {
+        return PaymentReceiptApiFp(this.configuration).listPaymentReceipts(accountId, search, type, filter, page, pageSize, sortBy, sortOrder, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {VoidPaymentReceiptRequest} voidPaymentReceiptRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public voidPaymentReceipt(accountId: string, id: string, voidPaymentReceiptRequest: VoidPaymentReceiptRequest, options?: RawAxiosRequestConfig) {
+        return PaymentReceiptApiFp(this.configuration).voidPaymentReceipt(accountId, id, voidPaymentReceiptRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
