@@ -1,6 +1,6 @@
 {
   "name": "@kuzium/orbit-api-client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OpenAPI client for @kuzium/orbit-api-client",
   "author": "Kuzium Technologies",
   "repository": {
