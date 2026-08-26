@@ -15,5 +15,5 @@
 
 export * from "./api";
 export * from "./configuration";
-export * from "./src/client";
 
+export * from "./src/client";

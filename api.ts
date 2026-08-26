@@ -35,6 +35,52 @@ export interface CreateCustomerRequest {
     'notes': string | null;
     'priceListId'?: string | null;
 }
+export interface CreateProductRequest {
+    'sku': string;
+    'name': string;
+    'description'?: string | null;
+    'barcode'?: string | null;
+    'productType'?: number;
+    'categoryId'?: string | null;
+    'unitOfMeasureId': string;
+    'costPrice'?: number;
+    'unitPrice': number;
+    'taxRate'?: number;
+    'taxRateId'?: string | null;
+    'reorderLevel'?: number;
+    'minStockLevel'?: number;
+    'maxStockLevel'?: number;
+    'tracksLot'?: boolean;
+    'tracksSerial'?: boolean;
+    'costingMethod'?: number | null;
+    'imageUrl'?: string | null;
+    'isActive'?: boolean;
+    'displayOrder'?: number;
+    'parentProductId'?: string | null;
+    'variantAttributes'?: string | null;
+    'initialQuantity'?: number;
+    'inventoryReason'?: string | null;
+    'warehouseId'?: string | null;
+}
+export interface CreatePurchaseOrderLineRequest {
+    'productId': string | null;
+    'productName': string;
+    'quantity': number;
+    'unitPrice': number;
+    'discountPercent': number;
+    'discountAmount': number;
+    'dropShipSalesOrderLineId'?: string | null;
+}
+export interface CreatePurchaseOrderRequest {
+    'supplierId': string;
+    'purchaseOrderNo': string | null;
+    'status': string | null;
+    'notes': string | null;
+    'discountPercent': number;
+    'lines': Array<CreatePurchaseOrderLineRequest>;
+    'isDropShip'?: boolean;
+    'isConsignment'?: boolean;
+}
 export interface CreateSalesOrderLineRequest {
     'productId': string;
     'quantity': number;
@@ -96,12 +142,198 @@ export interface PagedResultOfCustomerResponse {
     'pageSize': number;
     'totalPages': number;
 }
+export interface PagedResultOfProductResponse {
+    'items': Array<ProductResponse>;
+    'totalCount': number;
+    'currentPage': number;
+    'pageSize': number;
+    'totalPages': number;
+}
+export interface PagedResultOfPurchaseInvoiceDto {
+    'items': Array<PurchaseInvoiceDto>;
+    'totalCount': number;
+    'currentPage': number;
+    'pageSize': number;
+    'totalPages': number;
+}
+export interface PagedResultOfPurchaseOrderResponse {
+    'items': Array<PurchaseOrderResponse>;
+    'totalCount': number;
+    'currentPage': number;
+    'pageSize': number;
+    'totalPages': number;
+}
+export interface PagedResultOfSalesInvoiceDto {
+    'items': Array<SalesInvoiceDto>;
+    'totalCount': number;
+    'currentPage': number;
+    'pageSize': number;
+    'totalPages': number;
+}
 export interface PagedResultOfSalesOrderDto {
     'items': Array<SalesOrderDto>;
     'totalCount': number;
     'currentPage': number;
     'pageSize': number;
     'totalPages': number;
+}
+export interface ProductResponse {
+    'id': string;
+    'accountId': string;
+    'sku': string;
+    'name': string;
+    'description'?: string | null;
+    'barcode'?: string | null;
+    'productType': number;
+    'categoryId'?: string | null;
+    'categoryName'?: string | null;
+    'unitOfMeasureId': string;
+    'unitOfMeasureName'?: string | null;
+    'unitOfMeasureSymbol'?: string | null;
+    'costPrice': number;
+    'unitPrice': number;
+    'taxRate'?: number;
+    'taxRateId'?: string | null;
+    'trackInventory': boolean;
+    'reorderLevel'?: number;
+    'minStockLevel'?: number;
+    'maxStockLevel'?: number;
+    'tracksLot'?: boolean;
+    'tracksSerial'?: boolean;
+    'costingMethod'?: number;
+    'averageCost'?: number;
+    'imageUrl'?: string | null;
+    'isActive': boolean;
+    'displayOrder': number;
+    'parentProductId'?: string | null;
+    'variantAttributes'?: string | null;
+    'createdAt': string;
+    'updatedAt': string;
+}
+export interface PurchaseInvoiceDetailDto {
+    'id'?: string;
+    'invoiceNumber'?: string;
+    'purchaseOrderId'?: string;
+    'purchaseOrderNo'?: string;
+    'supplierId'?: string;
+    'supplierName'?: string;
+    'invoiceDate'?: string;
+    'dueDate'?: string;
+    'status'?: string;
+    'totalAmount'?: number;
+    'amountPaid'?: number;
+    'amountDue'?: number;
+    'payments'?: Array<PurchaseInvoicePaymentDto>;
+}
+export interface PurchaseInvoiceDto {
+    'id'?: string;
+    'invoiceNumber'?: string;
+    'purchaseOrderId'?: string;
+    'supplierId'?: string;
+    'supplierName'?: string;
+    'invoiceDate'?: string;
+    'dueDate'?: string;
+    'status'?: string;
+    'totalAmount'?: number;
+    'amountPaid'?: number;
+    'amountDue'?: number;
+}
+export interface PurchaseInvoicePaymentDto {
+    'id'?: string;
+    'amount'?: number;
+    'paymentMethod'?: string;
+    'referenceNo'?: string;
+    'paidAt'?: string;
+    'notes'?: string | null;
+}
+export interface PurchaseOrderLineResponse {
+    'id': string;
+    'purchaseOrderId': string;
+    'productId': string | null;
+    'productName': string;
+    'quantity': number;
+    'unitPrice': number;
+    'lineTotal': number;
+    'quantityReceived': number;
+    'discountPercent': number;
+    'discountAmount': number;
+    'dropShipSalesOrderLineId'?: string | null;
+    'quantitySettled'?: number;
+    'quantityReturned'?: number;
+}
+export interface PurchaseOrderResponse {
+    'id': string;
+    'accountId': string;
+    'supplierId': string;
+    'supplierName': string;
+    'purchaseOrderNo': string;
+    'orderDate': string;
+    'totalAmount': number;
+    'status': string;
+    'notes': string;
+    'discountPercent': number;
+    'lines': Array<PurchaseOrderLineResponse>;
+    'createdAt': string;
+    'updatedAt': string;
+    'invoiceId': string | null;
+    'invoiceNumber': string | null;
+    'invoiceStatus': string | null;
+    'invoiceAmountDue': number;
+    'isDropShip'?: boolean;
+    'isConsignment'?: boolean;
+}
+export interface RecordInvoicePaymentRequest {
+    'amount': number;
+    'paymentMethod': string | null;
+    'notes': string | null;
+    'paymentAccountId'?: string | null;
+    'foreignAmount'?: number;
+    'exchangeRate'?: number;
+}
+export interface RecordPurchaseInvoicePaymentRequest {
+    'amount': number;
+    'paymentMethod': string | null;
+    'notes': string | null;
+    'paymentAccountId'?: string | null;
+    'foreignAmount'?: number;
+    'exchangeRate'?: number;
+}
+export interface SalesInvoiceDetailDto {
+    'id'?: string;
+    'invoiceNumber'?: string;
+    'salesOrderId'?: string;
+    'orderNumber'?: string;
+    'customerId'?: string;
+    'customerName'?: string;
+    'invoiceDate'?: string;
+    'dueDate'?: string;
+    'status'?: string;
+    'totalAmount'?: number;
+    'discountPercent'?: number;
+    'amountPaid'?: number;
+    'amountDue'?: number;
+    'payments'?: Array<SalesInvoicePaymentDto>;
+}
+export interface SalesInvoiceDto {
+    'id'?: string;
+    'invoiceNumber'?: string;
+    'salesOrderId'?: string;
+    'customerId'?: string;
+    'customerName'?: string;
+    'invoiceDate'?: string;
+    'dueDate'?: string;
+    'status'?: string;
+    'totalAmount'?: number;
+    'amountPaid'?: number;
+    'amountDue'?: number;
+}
+export interface SalesInvoicePaymentDto {
+    'id'?: string;
+    'amount'?: number;
+    'paymentMethod'?: string;
+    'referenceNo'?: string;
+    'paidAt'?: string;
+    'notes'?: string | null;
 }
 export interface SalesOrder {
     'accountId'?: string;
@@ -188,6 +420,41 @@ export interface UpdateCustomerRequest {
     'priceListId'?: string | null;
 }
 export interface UpdateOrderStatusRequest {
+    'status': string;
+}
+export interface UpdateProductRequest {
+    'sku': string;
+    'name': string;
+    'description'?: string | null;
+    'barcode'?: string | null;
+    'productType'?: number;
+    'categoryId'?: string | null;
+    'unitOfMeasureId': string;
+    'costPrice'?: number;
+    'unitPrice': number;
+    'taxRate'?: number;
+    'taxRateId'?: string | null;
+    'reorderLevel'?: number;
+    'minStockLevel'?: number;
+    'maxStockLevel'?: number;
+    'tracksLot'?: boolean;
+    'tracksSerial'?: boolean;
+    'costingMethod'?: number | null;
+    'imageUrl'?: string | null;
+    'isActive'?: boolean;
+    'displayOrder'?: number;
+    'parentProductId'?: string | null;
+    'variantAttributes'?: string | null;
+}
+export interface UpdatePurchaseOrderRequest {
+    'supplierId': string;
+    'notes': string | null;
+    'discountPercent': number;
+    'lines': Array<CreatePurchaseOrderLineRequest>;
+    'isDropShip'?: boolean;
+    'isConsignment'?: boolean;
+}
+export interface UpdatePurchaseOrderStatusRequest {
     'status': string;
 }
 export interface UpdateSalesOrderRequest {
@@ -1093,6 +1360,1523 @@ export class MeApi extends BaseAPI implements MeApiInterface {
 
 
 /**
+ * ProductsApi - axios parameter creator
+ */
+export const ProductsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreateProductRequest} createProductRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createProduct: async (accountId: string, createProductRequest: CreateProductRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('createProduct', 'accountId', accountId)
+            // verify required parameter 'createProductRequest' is not null or undefined
+            assertParamExists('createProduct', 'createProductRequest', createProductRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/products`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createProductRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteProduct: async (accountId: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('deleteProduct', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteProduct', 'id', id)
+            const localVarPath = `/api/v1/accounts/{accountId}/products/{id}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProduct: async (accountId: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('getProduct', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getProduct', 'id', id)
+            const localVarPath = `/api/v1/accounts/{accountId}/products/{id}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listProducts: async (accountId: string, search?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('listProducts', 'accountId', accountId)
+            const localVarPath = `/api/v1/accounts/{accountId}/products`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (sortBy !== undefined) {
+                localVarQueryParameter['sortBy'] = sortBy;
+            }
+
+            if (sortOrder !== undefined) {
+                localVarQueryParameter['sortOrder'] = sortOrder;
+            }
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {UpdateProductRequest} updateProductRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProduct: async (accountId: string, id: string, updateProductRequest: UpdateProductRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('updateProduct', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateProduct', 'id', id)
+            // verify required parameter 'updateProductRequest' is not null or undefined
+            assertParamExists('updateProduct', 'updateProductRequest', updateProductRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/products/{id}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateProductRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ProductsApi - functional programming interface
+ */
+export const ProductsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ProductsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreateProductRequest} createProductRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createProduct(accountId: string, createProductRequest: CreateProductRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createProduct(accountId, createProductRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.createProduct']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteProduct(accountId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteProduct(accountId, id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.deleteProduct']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProduct(accountId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProduct(accountId, id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.getProduct']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listProducts(accountId: string, search?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PagedResultOfProductResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listProducts(accountId, search, page, pageSize, sortBy, sortOrder, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.listProducts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {UpdateProductRequest} updateProductRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateProduct(accountId: string, id: string, updateProductRequest: UpdateProductRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateProduct(accountId, id, updateProductRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.updateProduct']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ProductsApi - factory interface
+ */
+export const ProductsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ProductsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreateProductRequest} createProductRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createProduct(accountId: string, createProductRequest: CreateProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProductResponse> {
+            return localVarFp.createProduct(accountId, createProductRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteProduct(accountId: string, id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteProduct(accountId, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProduct(accountId: string, id: string, options?: RawAxiosRequestConfig): AxiosPromise<ProductResponse> {
+            return localVarFp.getProduct(accountId, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listProducts(accountId: string, search?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfProductResponse> {
+            return localVarFp.listProducts(accountId, search, page, pageSize, sortBy, sortOrder, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {UpdateProductRequest} updateProductRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProduct(accountId: string, id: string, updateProductRequest: UpdateProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.updateProduct(accountId, id, updateProductRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ProductsApi - interface
+ */
+export interface ProductsApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {CreateProductRequest} createProductRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createProduct(accountId: string, createProductRequest: CreateProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProductResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteProduct(accountId: string, id: string, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getProduct(accountId: string, id: string, options?: RawAxiosRequestConfig): AxiosPromise<ProductResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [sortBy] 
+     * @param {string} [sortOrder] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listProducts(accountId: string, search?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfProductResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {UpdateProductRequest} updateProductRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    updateProduct(accountId: string, id: string, updateProductRequest: UpdateProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+
+}
+
+/**
+ * ProductsApi - object-oriented interface
+ */
+export class ProductsApi extends BaseAPI implements ProductsApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {CreateProductRequest} createProductRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public createProduct(accountId: string, createProductRequest: CreateProductRequest, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).createProduct(accountId, createProductRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public deleteProduct(accountId: string, id: string, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).deleteProduct(accountId, id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getProduct(accountId: string, id: string, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).getProduct(accountId, id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [sortBy] 
+     * @param {string} [sortOrder] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public listProducts(accountId: string, search?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).listProducts(accountId, search, page, pageSize, sortBy, sortOrder, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} id 
+     * @param {UpdateProductRequest} updateProductRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public updateProduct(accountId: string, id: string, updateProductRequest: UpdateProductRequest, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).updateProduct(accountId, id, updateProductRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PurchaseApi - axios parameter creator
+ */
+export const PurchaseApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreatePurchaseOrderRequest} createPurchaseOrderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPurchaseOrder: async (accountId: string, createPurchaseOrderRequest: CreatePurchaseOrderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('createPurchaseOrder', 'accountId', accountId)
+            // verify required parameter 'createPurchaseOrderRequest' is not null or undefined
+            assertParamExists('createPurchaseOrder', 'createPurchaseOrderRequest', createPurchaseOrderRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/orders`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createPurchaseOrderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePurchaseOrder: async (accountId: string, orderId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('deletePurchaseOrder', 'accountId', accountId)
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('deletePurchaseOrder', 'orderId', orderId)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/orders/{orderId}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{orderId}', encodeURIComponent(String(orderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPurchaseOrder: async (accountId: string, orderId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('getPurchaseOrder', 'accountId', accountId)
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('getPurchaseOrder', 'orderId', orderId)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/orders/{orderId}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{orderId}', encodeURIComponent(String(orderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [status] 
+         * @param {string} [supplierId] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPurchaseOrders: async (accountId: string, search?: string, status?: string, supplierId?: string, filter?: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('listPurchaseOrders', 'accountId', accountId)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/orders`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (supplierId !== undefined) {
+                localVarQueryParameter['supplierId'] = supplierId;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter['filter'] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {UpdatePurchaseOrderRequest} updatePurchaseOrderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePurchaseOrder: async (accountId: string, orderId: string, updatePurchaseOrderRequest: UpdatePurchaseOrderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('updatePurchaseOrder', 'accountId', accountId)
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('updatePurchaseOrder', 'orderId', orderId)
+            // verify required parameter 'updatePurchaseOrderRequest' is not null or undefined
+            assertParamExists('updatePurchaseOrder', 'updatePurchaseOrderRequest', updatePurchaseOrderRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/orders/{orderId}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{orderId}', encodeURIComponent(String(orderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updatePurchaseOrderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {UpdatePurchaseOrderStatusRequest} updatePurchaseOrderStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePurchaseOrderStatus: async (accountId: string, orderId: string, updatePurchaseOrderStatusRequest: UpdatePurchaseOrderStatusRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('updatePurchaseOrderStatus', 'accountId', accountId)
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('updatePurchaseOrderStatus', 'orderId', orderId)
+            // verify required parameter 'updatePurchaseOrderStatusRequest' is not null or undefined
+            assertParamExists('updatePurchaseOrderStatus', 'updatePurchaseOrderStatusRequest', updatePurchaseOrderStatusRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/orders/{orderId}/status`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{orderId}', encodeURIComponent(String(orderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updatePurchaseOrderStatusRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PurchaseApi - functional programming interface
+ */
+export const PurchaseApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PurchaseApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreatePurchaseOrderRequest} createPurchaseOrderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createPurchaseOrder(accountId: string, createPurchaseOrderRequest: CreatePurchaseOrderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurchaseOrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPurchaseOrder(accountId, createPurchaseOrderRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseApi.createPurchaseOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deletePurchaseOrder(accountId: string, orderId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePurchaseOrder(accountId, orderId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseApi.deletePurchaseOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPurchaseOrder(accountId: string, orderId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurchaseOrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPurchaseOrder(accountId, orderId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseApi.getPurchaseOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [status] 
+         * @param {string} [supplierId] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listPurchaseOrders(accountId: string, search?: string, status?: string, supplierId?: string, filter?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PagedResultOfPurchaseOrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPurchaseOrders(accountId, search, status, supplierId, filter, page, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseApi.listPurchaseOrders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {UpdatePurchaseOrderRequest} updatePurchaseOrderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updatePurchaseOrder(accountId: string, orderId: string, updatePurchaseOrderRequest: UpdatePurchaseOrderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurchaseOrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePurchaseOrder(accountId, orderId, updatePurchaseOrderRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseApi.updatePurchaseOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {UpdatePurchaseOrderStatusRequest} updatePurchaseOrderStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updatePurchaseOrderStatus(accountId: string, orderId: string, updatePurchaseOrderStatusRequest: UpdatePurchaseOrderStatusRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurchaseOrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePurchaseOrderStatus(accountId, orderId, updatePurchaseOrderStatusRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseApi.updatePurchaseOrderStatus']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PurchaseApi - factory interface
+ */
+export const PurchaseApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PurchaseApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {CreatePurchaseOrderRequest} createPurchaseOrderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPurchaseOrder(accountId: string, createPurchaseOrderRequest: CreatePurchaseOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseOrderResponse> {
+            return localVarFp.createPurchaseOrder(accountId, createPurchaseOrderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePurchaseOrder(accountId: string, orderId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePurchaseOrder(accountId, orderId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPurchaseOrder(accountId: string, orderId: string, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseOrderResponse> {
+            return localVarFp.getPurchaseOrder(accountId, orderId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [status] 
+         * @param {string} [supplierId] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPurchaseOrders(accountId: string, search?: string, status?: string, supplierId?: string, filter?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfPurchaseOrderResponse> {
+            return localVarFp.listPurchaseOrders(accountId, search, status, supplierId, filter, page, pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {UpdatePurchaseOrderRequest} updatePurchaseOrderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePurchaseOrder(accountId: string, orderId: string, updatePurchaseOrderRequest: UpdatePurchaseOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseOrderResponse> {
+            return localVarFp.updatePurchaseOrder(accountId, orderId, updatePurchaseOrderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} orderId 
+         * @param {UpdatePurchaseOrderStatusRequest} updatePurchaseOrderStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePurchaseOrderStatus(accountId: string, orderId: string, updatePurchaseOrderStatusRequest: UpdatePurchaseOrderStatusRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseOrderResponse> {
+            return localVarFp.updatePurchaseOrderStatus(accountId, orderId, updatePurchaseOrderStatusRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PurchaseApi - interface
+ */
+export interface PurchaseApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {CreatePurchaseOrderRequest} createPurchaseOrderRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createPurchaseOrder(accountId: string, createPurchaseOrderRequest: CreatePurchaseOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseOrderResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} orderId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deletePurchaseOrder(accountId: string, orderId: string, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} orderId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPurchaseOrder(accountId: string, orderId: string, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseOrderResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {string} [status] 
+     * @param {string} [supplierId] 
+     * @param {string} [filter] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listPurchaseOrders(accountId: string, search?: string, status?: string, supplierId?: string, filter?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfPurchaseOrderResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} orderId 
+     * @param {UpdatePurchaseOrderRequest} updatePurchaseOrderRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    updatePurchaseOrder(accountId: string, orderId: string, updatePurchaseOrderRequest: UpdatePurchaseOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseOrderResponse>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} orderId 
+     * @param {UpdatePurchaseOrderStatusRequest} updatePurchaseOrderStatusRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    updatePurchaseOrderStatus(accountId: string, orderId: string, updatePurchaseOrderStatusRequest: UpdatePurchaseOrderStatusRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseOrderResponse>;
+
+}
+
+/**
+ * PurchaseApi - object-oriented interface
+ */
+export class PurchaseApi extends BaseAPI implements PurchaseApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {CreatePurchaseOrderRequest} createPurchaseOrderRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public createPurchaseOrder(accountId: string, createPurchaseOrderRequest: CreatePurchaseOrderRequest, options?: RawAxiosRequestConfig) {
+        return PurchaseApiFp(this.configuration).createPurchaseOrder(accountId, createPurchaseOrderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} orderId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public deletePurchaseOrder(accountId: string, orderId: string, options?: RawAxiosRequestConfig) {
+        return PurchaseApiFp(this.configuration).deletePurchaseOrder(accountId, orderId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} orderId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getPurchaseOrder(accountId: string, orderId: string, options?: RawAxiosRequestConfig) {
+        return PurchaseApiFp(this.configuration).getPurchaseOrder(accountId, orderId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {string} [status] 
+     * @param {string} [supplierId] 
+     * @param {string} [filter] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public listPurchaseOrders(accountId: string, search?: string, status?: string, supplierId?: string, filter?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return PurchaseApiFp(this.configuration).listPurchaseOrders(accountId, search, status, supplierId, filter, page, pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} orderId 
+     * @param {UpdatePurchaseOrderRequest} updatePurchaseOrderRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public updatePurchaseOrder(accountId: string, orderId: string, updatePurchaseOrderRequest: UpdatePurchaseOrderRequest, options?: RawAxiosRequestConfig) {
+        return PurchaseApiFp(this.configuration).updatePurchaseOrder(accountId, orderId, updatePurchaseOrderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} orderId 
+     * @param {UpdatePurchaseOrderStatusRequest} updatePurchaseOrderStatusRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public updatePurchaseOrderStatus(accountId: string, orderId: string, updatePurchaseOrderStatusRequest: UpdatePurchaseOrderStatusRequest, options?: RawAxiosRequestConfig) {
+        return PurchaseApiFp(this.configuration).updatePurchaseOrderStatus(accountId, orderId, updatePurchaseOrderStatusRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PurchaseInvoiceApi - axios parameter creator
+ */
+export const PurchaseInvoiceApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPurchaseInvoice: async (accountId: string, invoiceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('getPurchaseInvoice', 'accountId', accountId)
+            // verify required parameter 'invoiceId' is not null or undefined
+            assertParamExists('getPurchaseInvoice', 'invoiceId', invoiceId)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/invoices/{invoiceId}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPurchaseInvoicePayments: async (accountId: string, invoiceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('listPurchaseInvoicePayments', 'accountId', accountId)
+            // verify required parameter 'invoiceId' is not null or undefined
+            assertParamExists('listPurchaseInvoicePayments', 'invoiceId', invoiceId)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/invoices/{invoiceId}/payments`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [status] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPurchaseInvoices: async (accountId: string, search?: string, status?: string, filter?: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('listPurchaseInvoices', 'accountId', accountId)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/invoices`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter['filter'] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {RecordPurchaseInvoicePaymentRequest} recordPurchaseInvoicePaymentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recordPurchaseInvoicePayment: async (accountId: string, invoiceId: string, recordPurchaseInvoicePaymentRequest: RecordPurchaseInvoicePaymentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('recordPurchaseInvoicePayment', 'accountId', accountId)
+            // verify required parameter 'invoiceId' is not null or undefined
+            assertParamExists('recordPurchaseInvoicePayment', 'invoiceId', invoiceId)
+            // verify required parameter 'recordPurchaseInvoicePaymentRequest' is not null or undefined
+            assertParamExists('recordPurchaseInvoicePayment', 'recordPurchaseInvoicePaymentRequest', recordPurchaseInvoicePaymentRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/purchase/invoices/{invoiceId}/payments`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(recordPurchaseInvoicePaymentRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PurchaseInvoiceApi - functional programming interface
+ */
+export const PurchaseInvoiceApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PurchaseInvoiceApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPurchaseInvoice(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurchaseInvoiceDetailDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPurchaseInvoice(accountId, invoiceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseInvoiceApi.getPurchaseInvoice']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listPurchaseInvoicePayments(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PurchaseInvoicePaymentDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPurchaseInvoicePayments(accountId, invoiceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseInvoiceApi.listPurchaseInvoicePayments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [status] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listPurchaseInvoices(accountId: string, search?: string, status?: string, filter?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PagedResultOfPurchaseInvoiceDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPurchaseInvoices(accountId, search, status, filter, page, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseInvoiceApi.listPurchaseInvoices']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {RecordPurchaseInvoicePaymentRequest} recordPurchaseInvoicePaymentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async recordPurchaseInvoicePayment(accountId: string, invoiceId: string, recordPurchaseInvoicePaymentRequest: RecordPurchaseInvoicePaymentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurchaseInvoicePaymentDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.recordPurchaseInvoicePayment(accountId, invoiceId, recordPurchaseInvoicePaymentRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PurchaseInvoiceApi.recordPurchaseInvoicePayment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PurchaseInvoiceApi - factory interface
+ */
+export const PurchaseInvoiceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PurchaseInvoiceApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPurchaseInvoice(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseInvoiceDetailDto> {
+            return localVarFp.getPurchaseInvoice(accountId, invoiceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPurchaseInvoicePayments(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<PurchaseInvoicePaymentDto>> {
+            return localVarFp.listPurchaseInvoicePayments(accountId, invoiceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [search] 
+         * @param {string} [status] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPurchaseInvoices(accountId: string, search?: string, status?: string, filter?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfPurchaseInvoiceDto> {
+            return localVarFp.listPurchaseInvoices(accountId, search, status, filter, page, pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {RecordPurchaseInvoicePaymentRequest} recordPurchaseInvoicePaymentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recordPurchaseInvoicePayment(accountId: string, invoiceId: string, recordPurchaseInvoicePaymentRequest: RecordPurchaseInvoicePaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseInvoicePaymentDto> {
+            return localVarFp.recordPurchaseInvoicePayment(accountId, invoiceId, recordPurchaseInvoicePaymentRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PurchaseInvoiceApi - interface
+ */
+export interface PurchaseInvoiceApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPurchaseInvoice(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseInvoiceDetailDto>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listPurchaseInvoicePayments(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<PurchaseInvoicePaymentDto>>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {string} [status] 
+     * @param {string} [filter] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listPurchaseInvoices(accountId: string, search?: string, status?: string, filter?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfPurchaseInvoiceDto>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {RecordPurchaseInvoicePaymentRequest} recordPurchaseInvoicePaymentRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    recordPurchaseInvoicePayment(accountId: string, invoiceId: string, recordPurchaseInvoicePaymentRequest: RecordPurchaseInvoicePaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurchaseInvoicePaymentDto>;
+
+}
+
+/**
+ * PurchaseInvoiceApi - object-oriented interface
+ */
+export class PurchaseInvoiceApi extends BaseAPI implements PurchaseInvoiceApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getPurchaseInvoice(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig) {
+        return PurchaseInvoiceApiFp(this.configuration).getPurchaseInvoice(accountId, invoiceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public listPurchaseInvoicePayments(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig) {
+        return PurchaseInvoiceApiFp(this.configuration).listPurchaseInvoicePayments(accountId, invoiceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [search] 
+     * @param {string} [status] 
+     * @param {string} [filter] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public listPurchaseInvoices(accountId: string, search?: string, status?: string, filter?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return PurchaseInvoiceApiFp(this.configuration).listPurchaseInvoices(accountId, search, status, filter, page, pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {RecordPurchaseInvoicePaymentRequest} recordPurchaseInvoicePaymentRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public recordPurchaseInvoicePayment(accountId: string, invoiceId: string, recordPurchaseInvoicePaymentRequest: RecordPurchaseInvoicePaymentRequest, options?: RawAxiosRequestConfig) {
+        return PurchaseInvoiceApiFp(this.configuration).recordPurchaseInvoicePayment(accountId, invoiceId, recordPurchaseInvoicePaymentRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * SalesApi - axios parameter creator
  */
 export const SalesApiAxiosParamCreator = function (configuration?: Configuration) {
@@ -1705,6 +3489,450 @@ export class SalesApi extends BaseAPI implements SalesApiInterface {
      */
     public updateSalesOrderStatus(accountId: string, orderId: string, updateOrderStatusRequest: UpdateOrderStatusRequest, options?: RawAxiosRequestConfig) {
         return SalesApiFp(this.configuration).updateSalesOrderStatus(accountId, orderId, updateOrderStatusRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * SalesInvoiceApi - axios parameter creator
+ */
+export const SalesInvoiceApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSalesInvoice: async (accountId: string, invoiceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('getSalesInvoice', 'accountId', accountId)
+            // verify required parameter 'invoiceId' is not null or undefined
+            assertParamExists('getSalesInvoice', 'invoiceId', invoiceId)
+            const localVarPath = `/api/v1/accounts/{accountId}/sales/invoices/{invoiceId}`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSalesInvoicePayments: async (accountId: string, invoiceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('listSalesInvoicePayments', 'accountId', accountId)
+            // verify required parameter 'invoiceId' is not null or undefined
+            assertParamExists('listSalesInvoicePayments', 'invoiceId', invoiceId)
+            const localVarPath = `/api/v1/accounts/{accountId}/sales/invoices/{invoiceId}/payments`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [customerId] 
+         * @param {string} [status] 
+         * @param {string} [search] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSalesInvoices: async (accountId: string, customerId?: string, status?: string, search?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('listSalesInvoices', 'accountId', accountId)
+            const localVarPath = `/api/v1/accounts/{accountId}/sales/invoices`
+                .replace('{accountId}', encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            if (customerId !== undefined) {
+                localVarQueryParameter['customerId'] = customerId;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter['filter'] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (sortBy !== undefined) {
+                localVarQueryParameter['sortBy'] = sortBy;
+            }
+
+            if (sortOrder !== undefined) {
+                localVarQueryParameter['sortOrder'] = sortOrder;
+            }
+
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {RecordInvoicePaymentRequest} recordInvoicePaymentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recordSalesInvoicePayment: async (accountId: string, invoiceId: string, recordInvoicePaymentRequest: RecordInvoicePaymentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('recordSalesInvoicePayment', 'accountId', accountId)
+            // verify required parameter 'invoiceId' is not null or undefined
+            assertParamExists('recordSalesInvoicePayment', 'invoiceId', invoiceId)
+            // verify required parameter 'recordInvoicePaymentRequest' is not null or undefined
+            assertParamExists('recordSalesInvoicePayment', 'recordInvoicePaymentRequest', recordInvoicePaymentRequest)
+            const localVarPath = `/api/v1/accounts/{accountId}/sales/invoices/{invoiceId}/payments`
+                .replace('{accountId}', encodeURIComponent(String(accountId)))
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-Api-Key", configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'text/plain,application/json,text/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(recordInvoicePaymentRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SalesInvoiceApi - functional programming interface
+ */
+export const SalesInvoiceApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SalesInvoiceApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSalesInvoice(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SalesInvoiceDetailDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesInvoice(accountId, invoiceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesInvoiceApi.getSalesInvoice']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listSalesInvoicePayments(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SalesInvoicePaymentDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSalesInvoicePayments(accountId, invoiceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesInvoiceApi.listSalesInvoicePayments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [customerId] 
+         * @param {string} [status] 
+         * @param {string} [search] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listSalesInvoices(accountId: string, customerId?: string, status?: string, search?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PagedResultOfSalesInvoiceDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSalesInvoices(accountId, customerId, status, search, filter, page, pageSize, sortBy, sortOrder, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesInvoiceApi.listSalesInvoices']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {RecordInvoicePaymentRequest} recordInvoicePaymentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async recordSalesInvoicePayment(accountId: string, invoiceId: string, recordInvoicePaymentRequest: RecordInvoicePaymentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SalesInvoicePaymentDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.recordSalesInvoicePayment(accountId, invoiceId, recordInvoicePaymentRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesInvoiceApi.recordSalesInvoicePayment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * SalesInvoiceApi - factory interface
+ */
+export const SalesInvoiceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SalesInvoiceApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSalesInvoice(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<SalesInvoiceDetailDto> {
+            return localVarFp.getSalesInvoice(accountId, invoiceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSalesInvoicePayments(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SalesInvoicePaymentDto>> {
+            return localVarFp.listSalesInvoicePayments(accountId, invoiceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} [customerId] 
+         * @param {string} [status] 
+         * @param {string} [search] 
+         * @param {string} [filter] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [sortBy] 
+         * @param {string} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSalesInvoices(accountId: string, customerId?: string, status?: string, search?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfSalesInvoiceDto> {
+            return localVarFp.listSalesInvoices(accountId, customerId, status, search, filter, page, pageSize, sortBy, sortOrder, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} accountId 
+         * @param {string} invoiceId 
+         * @param {RecordInvoicePaymentRequest} recordInvoicePaymentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recordSalesInvoicePayment(accountId: string, invoiceId: string, recordInvoicePaymentRequest: RecordInvoicePaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<SalesInvoicePaymentDto> {
+            return localVarFp.recordSalesInvoicePayment(accountId, invoiceId, recordInvoicePaymentRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SalesInvoiceApi - interface
+ */
+export interface SalesInvoiceApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getSalesInvoice(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<SalesInvoiceDetailDto>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listSalesInvoicePayments(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SalesInvoicePaymentDto>>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [customerId] 
+     * @param {string} [status] 
+     * @param {string} [search] 
+     * @param {string} [filter] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [sortBy] 
+     * @param {string} [sortOrder] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listSalesInvoices(accountId: string, customerId?: string, status?: string, search?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig): AxiosPromise<PagedResultOfSalesInvoiceDto>;
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {RecordInvoicePaymentRequest} recordInvoicePaymentRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    recordSalesInvoicePayment(accountId: string, invoiceId: string, recordInvoicePaymentRequest: RecordInvoicePaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<SalesInvoicePaymentDto>;
+
+}
+
+/**
+ * SalesInvoiceApi - object-oriented interface
+ */
+export class SalesInvoiceApi extends BaseAPI implements SalesInvoiceApiInterface {
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getSalesInvoice(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig) {
+        return SalesInvoiceApiFp(this.configuration).getSalesInvoice(accountId, invoiceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public listSalesInvoicePayments(accountId: string, invoiceId: string, options?: RawAxiosRequestConfig) {
+        return SalesInvoiceApiFp(this.configuration).listSalesInvoicePayments(accountId, invoiceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} [customerId] 
+     * @param {string} [status] 
+     * @param {string} [search] 
+     * @param {string} [filter] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [sortBy] 
+     * @param {string} [sortOrder] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public listSalesInvoices(accountId: string, customerId?: string, status?: string, search?: string, filter?: string, page?: number, pageSize?: number, sortBy?: string, sortOrder?: string, options?: RawAxiosRequestConfig) {
+        return SalesInvoiceApiFp(this.configuration).listSalesInvoices(accountId, customerId, status, search, filter, page, pageSize, sortBy, sortOrder, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {string} invoiceId 
+     * @param {RecordInvoicePaymentRequest} recordInvoicePaymentRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public recordSalesInvoicePayment(accountId: string, invoiceId: string, recordInvoicePaymentRequest: RecordInvoicePaymentRequest, options?: RawAxiosRequestConfig) {
+        return SalesInvoiceApiFp(this.configuration).recordSalesInvoicePayment(accountId, invoiceId, recordInvoicePaymentRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

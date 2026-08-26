@@ -1,5 +1,5 @@
 import { Configuration } from "../configuration";
-import { CrmApi, InventoryApi, MeApi, SalesApi } from "../api";
+import { CrmApi, InventoryApi, MeApi, ProductsApi, PurchaseApi, PurchaseInvoiceApi, SalesApi, SalesInvoiceApi } from "../api";
 
 export interface OrbitClientOptions {
   /** Create one under Settings > API Keys in your Orbit account. */
@@ -44,8 +44,12 @@ function accountScoped<T extends object>(api: T, resolveAccountId: () => Promise
  */
 export class OrbitClient {
   readonly sales: AccountScoped<SalesApi>;
+  readonly salesInvoices: AccountScoped<SalesInvoiceApi>;
   readonly crm: AccountScoped<CrmApi>;
   readonly inventory: AccountScoped<InventoryApi>;
+  readonly products: AccountScoped<ProductsApi>;
+  readonly purchase: AccountScoped<PurchaseApi>;
+  readonly purchaseInvoices: AccountScoped<PurchaseInvoiceApi>;
 
   private readonly meApi: MeApi;
   private accountIdPromise?: Promise<string>;
@@ -60,8 +64,12 @@ export class OrbitClient {
     const resolveAccountId = () => this.getAccountId();
 
     this.sales = accountScoped(new SalesApi(configuration), resolveAccountId);
+    this.salesInvoices = accountScoped(new SalesInvoiceApi(configuration), resolveAccountId);
     this.crm = accountScoped(new CrmApi(configuration), resolveAccountId);
     this.inventory = accountScoped(new InventoryApi(configuration), resolveAccountId);
+    this.products = accountScoped(new ProductsApi(configuration), resolveAccountId);
+    this.purchase = accountScoped(new PurchaseApi(configuration), resolveAccountId);
+    this.purchaseInvoices = accountScoped(new PurchaseInvoiceApi(configuration), resolveAccountId);
   }
 
   /** Resolved once per client instance (not once per call) and cached for the client's lifetime - an API key's account never changes. */
